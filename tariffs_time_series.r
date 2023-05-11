@@ -1,8 +1,8 @@
-#Code to get historical tariff dataset on a bilateral product level. This moves one product group at a time. (Product group refers to a group of HS codes which are considered the same in essence over time, but have changed their actual HS code number)
+#Code to get historical tariff dataset on a bilateral product level.
 
 #Insert file names
-RTA_groupings_CSV <- 'pref_imput_groups.csv' #This is a custom file created by me, interpreting inconsistent RTA descriptions and grouping them as consistent RTAs.
-RTA_members_CSV <- 'RTA_members.csv' #http://wits.worldbank.org/data/public/TRAINSPreferenceBenficiaries.xls
+RTA_groupings_CSV <- 'pref_imput_groups.csv' #This is a custom file created by me, interpreting inconsistent RTA descriptions and grouping them as consistent RTAs. The basis for this is the file at http://wits.worldbank.org/data/public/TRAINSPreferenceBenficiaries.xls
+RTA_members_CSV <- 'RTA_members.csv' #Create this file yourself from http://wits.worldbank.org/data/public/TRAINSPreferenceBenficiaries.xls
 
 #Insert codes that are considered to be the same product, e.g. wheat used to be 100190, and is now effectively 100199.
 common_commodity_code <- function() {
@@ -12,7 +12,7 @@ common_commodity_code <- function() {
 #1. What codes do you want?
 product_list <- list("100199","100190")
 #What years do you want?
-years_list <- as.list(2010:2020)
+years_list <- as.list(1988:2020)
 
 #Install and load packages
 #install.packages(c("rsdmx","httr","xml2","utils","tidyr","dplyr")) #uncomment if you need to install them
