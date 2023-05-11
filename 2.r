@@ -1,3 +1,4 @@
+#2. Download all the data
 #This requires looping through each reporter and each year.
 #First need Reporter list:
 #Download all the country codes from WITS
