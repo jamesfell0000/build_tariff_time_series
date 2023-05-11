@@ -1,5 +1,14 @@
 #Code to get historical tariff dataset on a bilateral product level.
 
+#Install and load packages
+#install.packages(c("rsdmx","httr","xml2","utils","tidyr","dplyr")) #uncomment if you need to install them
+library(rsdmx)
+library(httr)
+library(xml2)
+library(utils)
+library(tidyr)
+library(dplyr)
+
 #Insert file names
 RTA_groupings_CSV <- 'pref_imput_groups.csv' #This is a custom file created by me, interpreting inconsistent RTA descriptions and grouping them as consistent RTAs. The basis for this is the file at http://wits.worldbank.org/data/public/TRAINSPreferenceBenficiaries.xls
 RTA_members_CSV <- 'RTA_members.csv' #Create this file yourself from http://wits.worldbank.org/data/public/TRAINSPreferenceBenficiaries.xls
@@ -14,14 +23,7 @@ product_list <- list("100199","100190")
 #What years do you want?
 years_list <- as.list(1988:2020)
 
-#Install and load packages
-#install.packages(c("rsdmx","httr","xml2","utils","tidyr","dplyr")) #uncomment if you need to install them
-library(rsdmx)
-library(httr)
-library(xml2)
-library(utils)
-library(tidyr)
-library(dplyr)
+
 
 
 
@@ -29,8 +31,8 @@ library(dplyr)
 #This requires looping through each reporter and each year.
 #First need Reporter list:
 #Download all the country codes from WITS
-#countries <- read_xml("http://wits.worldbank.org/API/V1/wits/datasource/tradestats-tariff/country/ALL")
-countries <- read_xml("http://wits.worldbank.org/API/V1/wits/datasource/trn/country/ALL")
+countries <- read_xml("http://wits.worldbank.org/API/V1/wits/datasource/tradestats-tariff/country/ALL")
+#countries <- read_xml("http://wits.worldbank.org/API/V1/wits/datasource/trn/country/ALL")
 country_details <- xml_find_all(countries, ".//wits:country")
 #Get country code list
 country_code_list <- as.data.frame(xml_attr(country_details, "countrycode"))
@@ -63,6 +65,7 @@ for (reporter in reporter_list) {
 	    dataset <- readSDMX(url)
  	   #Convert the data to a dataframe
  	   year_df <- as.data.frame(dataset)
+		year_df$EXCLUDEDFROM <- NULL #Get rid of this column, not hugely useful and doesn't always appear
 	    #Bind this year's data to the previous year's data.
 	    tariffs <- rbind(tariffs,year_df)
 	  }
