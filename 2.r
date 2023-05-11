@@ -3,7 +3,6 @@
 #First need Reporter list:
 #Download all the country codes from WITS
 countries <- read_xml("http://wits.worldbank.org/API/V1/wits/datasource/tradestats-tariff/country/ALL")
-#countries <- read_xml("http://wits.worldbank.org/API/V1/wits/datasource/trn/country/ALL")
 country_details <- xml_find_all(countries, ".//wits:country")
 #Get country code list
 country_code_list <- as.data.frame(xml_attr(country_details, "countrycode"))
