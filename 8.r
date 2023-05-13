@@ -8,5 +8,5 @@ pref_tariffs <- merge(pref_tariffs, RTA_members, by=('PARTNER_original'), all.x=
 colnames(pref_tariffs)[which(names(pref_tariffs) == "PARTNER")] <- "PARTNER_AND_REGION"
 colnames(pref_tariffs)[which(names(pref_tariffs) == "Country")] <- "PARTNER"
 #If PARTNER is na then adopt the PARTNER_ORIGINAL code. (It can be NA because it could be a straight PTA, not RTA)
-pref_tariffs[is.na(pref_tariffs$PARTNER)]$PARTNER <- pref_tariffs$PARTNER_original
+pref_tariffs$PARTNER[is.na(pref_tariffs$PARTNER)] <- pref_tariffs$PARTNER_original #You might get a warning.
 saveRDS(pref_tariffs,'pref_tariffs.rds')
